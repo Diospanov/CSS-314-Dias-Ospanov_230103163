@@ -19,6 +19,7 @@
   "working_set_bytes": 37748736,
   "working_set_exceeds_l3": true,
   "dram_bytes_per_sweep": 37699616,
+  "arithmetic_intensity": 0.3120928340490259,
   "arithmetic_intensity_flops_per_byte": 0.3120928340490259,
   "memory": {
     "type": "DDR5",

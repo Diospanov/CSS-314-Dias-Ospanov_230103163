@@ -539,6 +539,7 @@ def main(argv=None):
         "working_set_bytes": working_set,
         "working_set_exceeds_l3": working_set > l3,
         "dram_bytes_per_sweep": bytes_per_sweep,
+        "arithmetic_intensity": intensity,
         "arithmetic_intensity_flops_per_byte": intensity,
         "memory": bandwidth,
         "peak_dp_flops_per_s": flops,

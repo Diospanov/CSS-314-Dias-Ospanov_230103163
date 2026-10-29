@@ -70,11 +70,12 @@ def benchmark_stride(data, stride):
 def write_tsv(path, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
     header = (
-        "stride\telements_touched\tmedian_time_ns\tlatency_per_element_ns\n"
+        "stride\telements_touched\tmedian_time_ns\tlatency_per_element_ns\tlatency_ns\n"
     )
     lines = [
         f"{row['stride']}\t{row['elements_touched']}\t"
-        f"{row['median_time_ns']:.0f}\t{row['latency_per_element_ns']:.6f}\n"
+        f"{row['median_time_ns']:.0f}\t{row['latency_per_element_ns']:.6f}\t"
+        f"{row['latency_per_element_ns']:.6f}\n"
         for row in rows
     ]
     path.write_text(header + "".join(lines), encoding="utf-8")

@@ -213,6 +213,7 @@ def profile_document(
     host_os = os_details()
     py = python_details()
     return {
+        "cpu_model": model_name,
         "cpu_model_name": model_name,
         "vendor": vendor,
         "family": family,

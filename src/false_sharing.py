@@ -108,14 +108,19 @@ def karp_flatt(t1, tp, processes):
 
 def write_tsv(path, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
-    header = "variant\tP\trun\truntime_s\tmedian_runtime_s\tspeedup\tkarp_flatt\n"
+    header = (
+        "variant\tP\trun\truntime_s\tmedian_runtime_s\tspeedup\t"
+        "karp_flatt\te_unpadded\te_padded\n"
+    )
     body = []
     for row in rows:
         e = "" if row["karp_flatt"] is None else f"{row['karp_flatt']:.6f}"
+        e_unpadded = "" if row["e_unpadded"] is None else f"{row['e_unpadded']:.6f}"
+        e_padded = "" if row["e_padded"] is None else f"{row['e_padded']:.6f}"
         body.append(
             f"{row['variant']}\t{row['P']}\t{row['run']}\t"
             f"{row['runtime_s']:.6f}\t{row['median_runtime_s']:.6f}\t"
-            f"{row['speedup']:.6f}\t{e}\n"
+            f"{row['speedup']:.6f}\t{e}\t{e_unpadded}\t{e_padded}\n"
         )
     path.write_text(header + "".join(body), encoding="utf-8")
 
@@ -135,6 +140,7 @@ def main(argv=None):
                 print(f"{variant:12s} P={processes}  {runtime:.3f} s", flush=True)
 
     rows = []
+    e_by_variant = {variant: {} for variant in WORKERS}
     for variant in WORKERS:
         t1 = statistics.median(samples[variant][1])
         for processes in PROCESS_COUNTS:
@@ -142,6 +148,7 @@ def main(argv=None):
             median_runtime = statistics.median(runtimes)
             speedup = t1 / median_runtime
             e = karp_flatt(t1, median_runtime, processes)
+            e_by_variant[variant][processes] = e
             for run_index, runtime in enumerate(runtimes, start=1):
                 rows.append(
                     {
@@ -160,6 +167,10 @@ def main(argv=None):
                 f"S {speedup:.3f}  e {e_text}",
                 flush=True,
             )
+
+    for row in rows:
+        row["e_unpadded"] = e_by_variant["unpadded"][row["P"]]
+        row["e_padded"] = e_by_variant["padded"][row["P"]]
 
     out = RESULTS / "false_sharing_karp_flatt.tsv"
     write_tsv(out, rows)
