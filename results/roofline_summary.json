@@ -1,0 +1,130 @@
+{
+  "student_id": "30103163",
+  "stencil": "5-point Jacobi",
+  "flops_per_interior_point": 5,
+  "operation": "0.2 * (north + south + west + east + center)",
+  "N": 1536,
+  "physical_cores": 12,
+  "process_counts": [
+    1,
+    2,
+    4,
+    8,
+    12
+  ],
+  "l1d_cache_bytes": 458752,
+  "l2_cache_bytes": 9437184,
+  "l3_cache_bytes": 18874368,
+  "cache_line_bytes": 64,
+  "working_set_bytes": 37748736,
+  "working_set_exceeds_l3": true,
+  "dram_bytes_per_sweep": 37699616,
+  "arithmetic_intensity_flops_per_byte": 0.3120928340490259,
+  "memory": {
+    "type": "DDR5",
+    "data_rate_mts": 4800,
+    "channels": 2,
+    "modules": 2,
+    "peak_bytes_per_s": 76800000000
+  },
+  "peak_dp_flops_per_s": 275200000000,
+  "peak_flops_model": {
+    "p_cores": 4,
+    "p_core_dp_flops_per_cycle": 16,
+    "p_core_base_hz": 2500000000,
+    "e_cores": 8,
+    "e_core_dp_flops_per_cycle": 8,
+    "e_core_base_hz": 1800000000,
+    "note": "i5-12500H base clocks. Golden Cove does two 256-bit FMAs per cycle. Gracemont does two 128-bit FMAs per cycle. An FMA counts as two flops."
+  },
+  "ridge_point_flops_per_byte": 3.5833333333333335,
+  "regime": "Memory-Bandwidth Bound",
+  "amdahl_serial_fraction": 0.1526583059577049,
+  "amdahl_speedup_ceiling": 6.5505770794879465,
+  "strong": [
+    {
+      "P": 1,
+      "N": 1536,
+      "median_runtime_s": 0.63216360000024,
+      "speedup": 1.0,
+      "efficiency_pct": 100.0,
+      "amdahl_s": null
+    },
+    {
+      "P": 2,
+      "N": 1536,
+      "median_runtime_s": 0.2708290999999008,
+      "speedup": 2.334179008092083,
+      "efficiency_pct": 116.70895040460414,
+      "amdahl_s": -0.14316768634006138
+    },
+    {
+      "P": 4,
+      "N": 1536,
+      "median_runtime_s": 0.20245100000011007,
+      "speedup": 3.122551135829886,
+      "efficiency_pct": 78.06377839574715,
+      "amdahl_s": 0.09366794713696103
+    },
+    {
+      "P": 8,
+      "N": 1536,
+      "median_runtime_s": 0.21461709999948653,
+      "speedup": 2.945541618080537,
+      "efficiency_pct": 36.819270226006715,
+      "amdahl_s": 0.24513844200982163
+    },
+    {
+      "P": 12,
+      "N": 1536,
+      "median_runtime_s": 0.1662000000005719,
+      "speedup": 3.803631768941424,
+      "efficiency_pct": 31.6969314078452,
+      "amdahl_s": 0.19589813891186997
+    }
+  ],
+  "weak": [
+    {
+      "P": 1,
+      "N": 1536,
+      "work_cells": 291791344,
+      "median_runtime_s": 0.46705720000045403,
+      "scaled_speedup": 1.0,
+      "efficiency_pct": 100.0
+    },
+    {
+      "P": 2,
+      "N": 2173,
+      "work_cells": 584441884,
+      "median_runtime_s": 0.5522613000002821,
+      "scaled_speedup": 1.693925821267412,
+      "efficiency_pct": 84.6962910633706
+    },
+    {
+      "P": 4,
+      "N": 3072,
+      "work_cells": 1168687600,
+      "median_runtime_s": 0.7355759000001854,
+      "scaled_speedup": 2.543130294335947,
+      "efficiency_pct": 63.57825735839867
+    },
+    {
+      "P": 8,
+      "N": 4345,
+      "work_cells": 2338844476,
+      "median_runtime_s": 1.8669341000004351,
+      "scaled_speedup": 2.005256914934197,
+      "efficiency_pct": 25.06571143667746
+    },
+    {
+      "P": 12,
+      "N": 5321,
+      "work_cells": 3508178364,
+      "median_runtime_s": 2.510375599999861,
+      "scaled_speedup": 2.2368693962695745,
+      "efficiency_pct": 18.640578302246453
+    }
+  ],
+  "scaled_speedup_definition": "S_scaled(P) = Work(P) / Work(1) * T_weak(1) / T_weak(P), the Gustafson-Barsis estimate of serial time on the scaled grid.",
+  "conclusion": "The stencil moves 0.312 flops per DRAM byte. The machine ridge point is 3.583 flops/byte, and the 37.7 MB working set is larger than the 18.9 MB L3 cache, so the kernel is Memory-Bandwidth Bound. Strong-scaling efficiency falls from 100% at one process to 31.7% at 12 (speedup 3.80). The fitted serial fraction is 0.153, so Amdahl's ceiling is 6.55. At 12 processes the Gustafson scaled speedup is 2.24 while runtime rises from 0.467 s to 2.510 s, because the enlarged grids stay on the memory roof and the E-cores trail the P-cores."
+}
