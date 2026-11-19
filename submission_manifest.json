@@ -1,0 +1,26 @@
+{
+  "github_user": "Diospanov",
+  "gpu_uuid": "GPU-ee4c9914-752f-1ec6-21ef-4af96609aad5",
+  "seed": 4851398423499474898,
+  "device": "Tesla T4",
+  "process_grid": "2x2",
+  "global_shape": [512, 512],
+  "tile": [16, 16],
+  "shared_apron": [18, 18],
+  "steps": 400,
+  "lambda_damp": 0.15,
+  "cfl_r": 0.0375,
+  "cfl_limit": 0.25,
+  "initial_energy": 66237.8032031341,
+  "final_energy": 64999.97701852636,
+  "energy_decreased": true,
+  "interior_sum": 4.10152272992671,
+  "sha256": "7565c15952b9cc1659c5caf37c881d426ab597d8dd6969a5a77d4203c87796dc",
+  "ranks": [
+    {"rank": 0, "coords": [0, 0], "north": null, "south": 2, "west": null, "east": 1, "device": "Tesla T4"},
+    {"rank": 1, "coords": [0, 1], "north": null, "south": 3, "west": 0, "east": null, "device": "Tesla T4"},
+    {"rank": 2, "coords": [1, 0], "north": 0, "south": null, "west": null, "east": 3, "device": "Tesla T4"},
+    {"rank": 3, "coords": [1, 1], "north": 1, "south": null, "west": 2, "east": null, "device": "Tesla T4"}
+  ],
+  "ptx_barrier": ["bar.sync \t0;"]
+}
